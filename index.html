@@ -3,22 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORS Test</title>
+    <title>Vodacom CORS</title>
+
+    <!-- Base URL for relative paths -->
+    <base href="https://pakashume.github.io/vodacom-cors/">
 </head>
 <body>
-    <h1>CORS Test Page</h1>
-    <button id="testRequest">Send CORS Request</button>
-    <p id="response"></p>
+    <h1>Vodacom CORS Testing Page</h1>
+    <p>Click the button below to test a CORS fetch request:</p>
+    <button id="testRequest">Test Request</button>
+    <p id="response" style="color: blue;"></p>
 
     <script>
+        // Event listener for the button click
         document.getElementById('testRequest').addEventListener('click', () => {
-            fetch('https://example2.netlify.app/data.json') // Replace with your server's URL
-                .then(response => response.json())
+            fetch('data.json') // Fetch the data.json file from the repository
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
+                    // Display the fetched data
                     document.getElementById('response').textContent = `Response: ${JSON.stringify(data)}`;
                 })
                 .catch(error => {
-                    document.getElementById('response').textContent = `Error: ${error}`;
+                    // Display an error message if fetch fails
+                    document.getElementById('response').textContent = `Error: ${error.message}`;
                 });
         });
     </script>
